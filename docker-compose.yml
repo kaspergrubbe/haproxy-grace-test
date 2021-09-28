@@ -1,0 +1,38 @@
+version: "3.9"
+
+services:
+  awselb:
+    image: haproxy:2.5-dev8
+    volumes:
+      - .:/foo
+    ports:
+      - 2000:2000
+      - 2001:2001
+    command: haproxy -f /foo/awselb.conf
+
+  lb01:
+    image: haproxy:2.5-dev8
+    volumes:
+      - .:/foo
+    ports:
+      - 2500:2500
+      - 2501:2501
+    command: haproxy -f /foo/lb01.conf
+  
+  lb02:
+    image: haproxy:2.5-dev8
+    volumes:
+      - .:/foo
+    ports:
+      - 2600:2600
+      - 2601:2601
+    command: haproxy -f /foo/lb02.conf
+
+  app:
+    image: haproxy:2.5-dev8
+    volumes:
+      - .:/foo
+    ports:
+      - 3000:3000
+    command: haproxy -f /foo/appserver.conf
+
